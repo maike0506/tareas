@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="1">
+        <tr>
+          <th>Comando</th>
+          <th>Descripción</th>
+        </tr>
+        <tr>
+          <td># apt-get install ssh</td>
+          <td>Instala el paquete SSH en el servidor</td>
+        </tr>
+        <tr>
+          <td>invokerc.d</td>
+          <td>Manipula el servicio en el sistema</td>
+        </tr>
+        <tr>
+          <td>systemctl</td>
+          <td>Manipula el servicio en sistemas con systemd</td>
+        </tr>
+        <tr>
+          <td>$ ssh usuario_remoto@servidor</td>
+          <td>Conecta a un servidor remoto vía SSH</td>
+        </tr>
+        <tr>
+          <td>ssh -p port_num username@remote_host</td>
+          <td>Especifica un puerto no estándar para la conexión SSH</td>
+        </tr>
+        <tr>
+          <td>$ ssh -p443 usuario_remoto@servidor</td>
+          <td>Conecta a un servidor remoto en el puerto 443</td>
+        </tr>
+        <tr>
+          <td>ssh username@remote_host command_to_run</td>
+          <td>Ejecuta un comando en un servidor remoto vía SSH</td>
+        </tr>
+        <tr>
+          <td>$ ssh usuario_remoto@servidor ls -l</td>
+          <td>Ejecuta el comando "ls -l" en un servidor remoto</td>
+        </tr>
+        <tr>
+          <td>$ ssh usuario_remoto@servidor "ls -l"</td>
+          <td>Ejecuta el comando "ls -l" en un servidor remoto con la orden entre comillas</td>
+        </tr>
+        <tr>
+          <td>ServerAliveInterval 120</td>
+          <td>Configura el intervalo de inactividad para el cliente SSH</td>
+        </tr>
+        <tr>
+          <td>ServerAliveCountMax 0</td>
+          <td>Define el máximo de respuestas de vida antes de desconectar</td>
+        </tr>
+        <tr>
+          <td>Host zipi</td>
+          <td>Alias de host para una conexión SSH</td>
+        </tr>
+        <tr>
+          <td>Hostname iescdl.es</td>
+          <td>Nombre del servidor al que se conecta mediante SSH</td>
+        </tr>
+        <tr>
+          <td>User perico</td>
+          <td>Nombre del usuario para la conexión SSH</td>
+        </tr>
+        <tr>
+          <td>Port 443</td>
+          <td>Puerto para la conexión SSH</td>
+        </tr>
+        <tr>
+          <td>$ ssh zipi</td>
+          <td>Conecta a un servidor SSH definido en ~/.ssh/config</td>
+        </tr>
+      </table>
+
+
+      <h2>Comandos SSH</h2>
+
+<table border="1">
+    <tr>
+        <th>Descripción</th>
+        <th>Comando</th>
+    </tr>
+    <tr>
+        <td>Ver claves almacenadas en /etc/ssh</td>
+        <td><code>ls -1 /etc/ssh/ssh_host_*</code></td>
+    </tr>
+    <tr>
+        <td>Mostrar las claves en el archivo de configuración</td>
+        <td><code>grep -w HostKey /etc/ssh/sshd_config</code></td>
+    </tr>
+    <tr>
+        <td>Obtener fingerprint de una clave pública</td>
+        <td><code>ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub</code></td>
+    </tr>
+    <tr>
+        <td>Generar una nueva clave ECDSA</td>
+        <td><code>ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ""</code></td>
+    </tr>
+    <tr>
+        <td>Generar claves para varios algoritmos</td>
+        <td><code>for algo in rsa ecdsa ed25519; do ssh-keygen -t $algo -f /etc/ssh/ssh_host_${algo}_key -N ""; done</code></td>
+    </tr>
+    <tr>
+        <td>Ver fingerprints almacenados en el cliente</td>
+        <td><code>ssh-keygen -l -f ~/.ssh/known_hosts</code></td>
+    </tr>
+    <tr>
+        <td>Eliminar fingerprint asociado a un servidor</td>
+        <td><code>ssh-keygen -R servidor</code></td>
+    </tr>
+    <tr>
+        <td>Verificar si un servidor tiene un fingerprint almacenado</td>
+        <td><code>ssh-keygen -F servidor</code></td>
+    </tr>
+    <tr>
+        <td>Generar un par de claves RSA</td>
+        <td><code>ssh-keygen</code></td>
+    </tr>
+    <tr>
+        <td>Generar una clave ECDSA con comentario</td>
+        <td><code>ssh-keygen -t ecdsa -C "Comentario alusivo a la clave"</code></td>
+    </tr>
+    <tr>
+        <td>Cambiar o eliminar la frase de contraseña de una clave privada</td>
+        <td><code>ssh-keygen -p</code></td>
+    </tr>
+    <tr>
+        <td>Copiar la clave pública al servidor con SSH-Copy-ID</td>
+        <td><code>ssh-copy-id usuario@servidor</code></td>
+    </tr>
+    <tr>
+        <td>Copiar la clave pública manualmente al servidor</td>
+        <td><code>cat ~/.ssh/id_rsa.pub | ssh usuario@servidor "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"</code></td>
+    </tr>
+    <tr>
+        <td>Transferir archivos con SCP</td>
+        <td><code>scp /path/local/fichero.txt usuario@servidor:path/en/el/servidor</code></td>
+    </tr>
+    <tr>
+        <td>Descargar archivos con SCP</td>
+        <td><code>scp usuario@servidor:fichero_remoto.txt .</code></td>
+    </tr>
+    <tr>
+        <td>Subir archivo con SFTP</td>
+        <td><code>sftp usuario@servidor<br>sftp&gt; put fichero_local</code></td>
+    </tr>
+    <tr>
+        <td>Descargar archivo con SFTP</td>
+        <td><code>sftp usuario@servidor<br>sftp&gt; get fichero_remoto</code></td>
+    </tr>
+    <tr>
+        <td>Instalar Google Authenticator</td>
+        <td><code>sudo apt install libpam-google-authenticator</code></td>
+    </tr>
+    <tr>
+        <td>Configurar Google Authenticator en PAM</td>
+        <td><code>auth required pam_google_authenticator.so</code></td>
+    </tr>
+    <tr>
+        <td>Modificar el archivo sshd_config</td>
+        <td><code>ChallengeResponseAuthentication yes</code></td>
+    </tr>
+    <tr>
+        <td>Reiniciar el servicio SSH</td>
+        <td><code>sudo systemctl restart sshd.service</code></td>
+    </tr>
+    <tr>
+        <td>Configurar Google Authenticator en el cliente</td>
+        <td><code>google-authenticator</code></td>
+    </tr>
+    <tr>
+        <td>Eliminar el fingerprint del servidor en Putty</td>
+        <td>Advertencia mostrada en Putty</td>
+    </tr>
+</table>
+
+      
+</body>
+
+
+</html>
